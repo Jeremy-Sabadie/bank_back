@@ -1,7 +1,13 @@
 package service;
 
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import model.Client;
 import model.Employe;
+import repositories.ClientRepository;
+import repositories.EmployeRepository;
 
 public class AuthService{
 
