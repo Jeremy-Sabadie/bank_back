@@ -2,17 +2,17 @@ package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.constraints.NotBlank;
 import model.Client;
 import model.Employe;
-import service.AuthService;
+import com.example.demo.service.AuthService;
+import org.springframework.web.bind.annotation.PostMapping;
+
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController{
+public class AuthController {
 
     @Autowired
     private AuthService authService;
@@ -38,181 +38,98 @@ public class AuthController{
     }
 
     @PostMapping("/register/employe")
-    public ResponseEntity<String> registerEmploye(@RequestBody RegisterEmployeRequest registerRequest) {
+    public ResponseEntity<String> registerEmploye(@RequestBody RegisterEmployeRequest request) {
         Employe newEmploye = authService.registerEmploye(
-            registerRequest.getNom(),
-            registerRequest.getPrenom(),
-            registerRequest.getPoste(),
-            registerRequest.getBanqueId(),
-            registerRequest.getUsername(),
-            registerRequest.getPassword()
+                request.getNom(),
+                request.getPrenom(),
+                request.getPoste(),
+                request.getBanqueId(),
+                request.getUsername(),
+                request.getPassword()
         );
         if (newEmploye != null) {
             return ResponseEntity.ok("Registration successful for employee: " + newEmploye.getNom());
         } else {
-            return ResponseEntity.badRequest().body("Registration failed");
+            return ResponseEntity.badRequest().body("Registration failed: username already exists");
         }
     }
 
     @PostMapping("/register/client")
-    public ResponseEntity<String> registerClient(@RequestBody RegisterClientRequest registerRequest) {
+    public ResponseEntity<String> registerClient(@RequestBody RegisterClientRequest request) {
         Client newClient = authService.registerClient(
-            registerRequest.getNom(),
-            registerRequest.getPrenom(),
-            registerRequest.getAdresse(),
-            registerRequest.getNumeroTelephone(),
-            registerRequest.getBanqueId(),
-            registerRequest.getUsername(),
-            registerRequest.getPassword()
+                request.getNom(),
+                request.getPrenom(),
+                request.getAdresse(),
+                request.getNumeroTelephone(),
+                request.getBanqueId(),
+                request.getUsername(),
+                request.getPassword()
         );
         if (newClient != null) {
             return ResponseEntity.ok("Registration successful for client: " + newClient.getNom());
         } else {
-            return ResponseEntity.badRequest().body("Registration failed");
+            return ResponseEntity.badRequest().body("Registration failed: username already exists");
         }
     }
 
+    // ---------- DTO Classes ----------
+
     public static class LoginRequest {
+        @NotBlank
         private String username;
+        @NotBlank
         private String password;
 
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
+        public String getUsername() { return username; }
+        public void setUsername(String username) { this.username = username; }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
     }
 
     public static class RegisterEmployeRequest {
-        private String nom;
-        private String prenom;
-        private String poste;
-        private String banqueId;
-        private String username;
-        private String password;
+        @NotBlank private String nom;
+        @NotBlank private String prenom;
+        @NotBlank private String poste;
+        @NotBlank private String banqueId;
+        @NotBlank private String username;
+        @NotBlank private String password;
 
-        public String getNom() {
-            return nom;
-        }
-
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
-
-        public String getPrenom() {
-            return prenom;
-        }
-
-        public void setPrenom(String prenom) {
-            this.prenom = prenom;
-        }
-
-        public String getPoste() {
-            return poste;
-        }
-
-        public void setPoste(String poste) {
-            this.poste = poste;
-        }
-
-        public String getBanqueId() {
-            return banqueId;
-        }
-
-        public void setBanqueId(String banqueId) {
-            this.banqueId = banqueId;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
+        public String getNom() { return nom; }
+        public void setNom(String nom) { this.nom = nom; }
+        public String getPrenom() { return prenom; }
+        public void setPrenom(String prenom) { this.prenom = prenom; }
+        public String getPoste() { return poste; }
+        public void setPoste(String poste) { this.poste = poste; }
+        public String getBanqueId() { return banqueId; }
+        public void setBanqueId(String banqueId) { this.banqueId = banqueId; }
+        public String getUsername() { return username; }
+        public void setUsername(String username) { this.username = username; }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
     }
 
     public static class RegisterClientRequest {
-        private String nom;
-        private String prenom;
-        private String adresse;
-        private String numeroTelephone;
-        private String banqueId;
-        private String username;
-        private String password;
+        @NotBlank private String nom;
+        @NotBlank private String prenom;
+        @NotBlank private String adresse;
+        @NotBlank private String numeroTelephone;
+        @NotBlank private String banqueId;
+        @NotBlank private String username;
+        @NotBlank private String password;
 
-        public String getNom() {
-            return nom;
-        }
-
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
-
-        public String getPrenom() {
-            return prenom;
-        }
-
-        public void setPrenom(String prenom) {
-            this.prenom = prenom;
-        }
-
-        public String getAdresse() {
-            return adresse;
-        }
-
-        public void setAdresse(String adresse) {
-            this.adresse = adresse;
-        }
-
-        public String getNumeroTelephone() {
-            return numeroTelephone;
-        }
-
-        public void setNumeroTelephone(String numeroTelephone) {
-            this.numeroTelephone = numeroTelephone;
-        }
-
-        public String getBanqueId() {
-            return banqueId;
-        }
-
-        public void setBanqueId(String banqueId) {
-            this.banqueId = banqueId;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
+        public String getNom() { return nom; }
+        public void setNom(String nom) { this.nom = nom; }
+        public String getPrenom() { return prenom; }
+        public void setPrenom(String prenom) { this.prenom = prenom; }
+        public String getAdresse() { return adresse; }
+        public void setAdresse(String adresse) { this.adresse = adresse; }
+        public String getNumeroTelephone() { return numeroTelephone; }
+        public void setNumeroTelephone(String numeroTelephone) { this.numeroTelephone = numeroTelephone; }
+        public String getBanqueId() { return banqueId; }
+        public void setBanqueId(String banqueId) { this.banqueId = banqueId; }
+        public String getUsername() { return username; }
+        public void setUsername(String username) { this.username = username; }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
     }
 }

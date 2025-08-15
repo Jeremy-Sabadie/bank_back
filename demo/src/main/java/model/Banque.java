@@ -1,66 +1,66 @@
 package model;
-import java.util.List;
 
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.bson.types.ObjectId;
 
 @Document(collection = "banques")
-
 public class Banque {
-	   @Id
-	    private String id;
-	    private String nom;
-	    private String adresse;
-	    private List<String> employes;
-	    private List<String> clients;
 
-	    public Banque() {
-	    }
+    @Id
+    private ObjectId id;           // Utilisation de ObjectId pour correspondre à MongoDB
+    private String nom;
+    private String adresse;
+    private List<ObjectId> employes;  // IDs des employés
+    private List<ObjectId> clients;   // IDs des clients
 
-	    public Banque(String nom, String adresse) {
-	        this.nom = nom;
-	        this.adresse = adresse;
-	    }
+    public Banque() {
+    }
 
-	    // Getters et Setters
-	    public String getId() {
-	        return id;
-	    }
+    public Banque(String nom, String adresse) {
+        this.nom = nom;
+        this.adresse = adresse;
+    }
 
-	    public void setId(String id) {
-	        this.id = id;
-	    }
+    // Getters et Setters
+    public ObjectId getId() {
+        return id;
+    }
 
-	    public String getNom() {
-	        return nom;
-	    }
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
-	    public void setNom(String nom) {
-	        this.nom = nom;
-	    }
+    public String getNom() {
+        return nom;
+    }
 
-	    public String getAdresse() {
-	        return adresse;
-	    }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	    public void setAdresse(String adresse) {
-	        this.adresse = adresse;
-	    }
+    public String getAdresse() {
+        return adresse;
+    }
 
-	    public List<String> getEmployes() {
-	        return employes;
-	    }
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
 
-	    public void setEmployes(List<String> employes) {
-	        this.employes = employes;
-	    }
+    public List<ObjectId> getEmployes() {
+        return employes;
+    }
 
-	    public List<String> getClients() {
-	        return clients;
-	    }
+    public void setEmployes(List<ObjectId> employes) {
+        this.employes = employes;
+    }
 
-	    public void setClients(List<String> clients) {
-	        this.clients = clients;
-	    }
-	}
+    public List<ObjectId> getClients() {
+        return clients;
+    }
 
+    public void setClients(List<ObjectId> clients) {
+        this.clients = clients;
+    }
+}
